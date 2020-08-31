@@ -1,4 +1,4 @@
-const db = require("../../data/config")
+const db = require("../../data/config");
 
 function getProjects() {
   return db("projects");
@@ -18,8 +18,19 @@ function addProject(project) {
   })
 }
 
+function getProjectResources(id){
+  return db("projects as p")
+  .join("tasks as t", "t.projects_id", "p.id")
+  .join("tasks_resources as tr", "tr.tasks_id", "t.id")
+  .join("resources as r", "r.id", "tr.resources_id")
+  .select("p.id", "p.name", "r.name", "r.desc")
+  .where("p.id", id)
+  .groupBy("r.id");
+}
+
 module.exports = {
   getProjects,
   getProjectsById,
-  addProject
+  addProject,
+  getProjectResources
 }

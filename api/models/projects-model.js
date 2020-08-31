@@ -1,4 +1,5 @@
 const db = require("../../data/config");
+const { orderBy } = require("../../data/config");
 
 function getProjects() {
   return db("projects");
@@ -28,9 +29,18 @@ function getProjectResources(id){
   .groupBy("r.id");
 }
 
+function getProjectTasks(id){
+  return db("projects as p")
+  .join("tasks as t", "t.projects_id", "p.id")
+  .select("p.name"," t.id", "t.desc", "t.notes", "t.completed")
+  .where("p.id", id)
+  .orderBy("t.id");
+}
+
 module.exports = {
   getProjects,
   getProjectsById,
   addProject,
-  getProjectResources
+  getProjectResources,
+  getProjectTasks
 }

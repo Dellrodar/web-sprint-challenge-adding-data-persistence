@@ -6,6 +6,8 @@ const server = express()
 const port = process.env.PORT || 4000
 const projectsRouter = require("./api/routers/projects-router")
 const resourcesRouter = require("./api/routers/resources-router")
+const tasksRouter = require("./api/routers/tasks-router")
+
 
 
 
@@ -14,6 +16,8 @@ server.use(helmet())
 server.use(cors())
 server.use('/projects', projectsRouter);
 server.use('/resources', resourcesRouter);
+server.use('/tasks', tasksRouter);
+
 
 server.use((err, req, res, next) => {
 	console.log(err)

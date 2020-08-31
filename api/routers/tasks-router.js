@@ -1,13 +1,13 @@
 express= require('express');
 
-const projects = require("../models/projects-model");
+const tasks = require("../models/tasks-model");
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
   try {
-    const allProjects = await projects.getProjects()
-    return res.json(allProjects)
+    const allTasks = await tasks.getTasks()
+    return res.json(allTasks)
   } catch (err) {
     return next(err)
   }
@@ -15,8 +15,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const project = await projects.getProjectsById(req.params.id)
-    return res.json(project)
+    const task = await tasks.getTasksById(req.params.id)
+    return res.json(task)
   } catch (err) {
     return next(err)
   }
@@ -24,12 +24,11 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const project = await projects.addProject(req.body)
-    return res.json(project);
+    const task = await tasks.addTask(req.body)
+    return res.json(task);
   }catch(err){
     return next(err)
   }
 })
-
 
 module.exports = router;
